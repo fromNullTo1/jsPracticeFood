@@ -166,12 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     render() {
       const div = document.createElement('div');
-      
+
       if (this.classes.length === 0) {
         this.class = 'menu__item';
         div.classList.add(this.class);
       } else {
-        this.classes.forEach(className => div.classList.add(className));        
+        this.classes.forEach(className => div.classList.add(className));
       }
 
       div.innerHTML = `
@@ -213,18 +213,58 @@ document.addEventListener('DOMContentLoaded', () => {
     "post",
     'Меню "Постное"',
     'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-    25,
+    15,
     '.menu .container',
     'menu__item'
   ).render();
 
 
+  // forms
+
+  const forms = document.querySelectorAll('form');
+
+  const message = {
+    loading: 'loading',
+    success: 'thank you! we will contact you soon',
+    failure: 'something went wrong'
+  };
+
+  forms.forEach(form => {
+    postData(form);
+  });
+
+  function postData(form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const statusMessage = document.createElement('div');
+      statusMessage.classList.add('status');
+      statusMessage.textContent = message.loading;
+      form.append(statusMessage);
+
+      const request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
+
+      request.setRequestHeader('Content-type', 'multipart/form-data')
+      const formData = new FormData(form);
+
+      request.send(formData);
+
+      request.addEventListener('load', () => {
+        if (request.status === 200) {
+          console.log(request.response);
+          statusMessage.textContent = message.success;
+        } else {
+          statusMessage.textContent = message.failure;
+        }
+      });
+
+    });
+
+  }
 
 
 
 
 
-
-
-
-})
+});
