@@ -220,6 +220,54 @@ document.addEventListener('DOMContentLoaded', () => {
   ).render();
 
 
+  // forms
+
+  // const forms = document.querySelectorAll('form');
+
+  // const message = {
+  //   loading: 'loading',
+  //   success: 'thank you! we will contact you soon',
+  //   failure: 'something went wrong'
+  // };
+
+  // forms.forEach(form => {
+  //   postData(form);
+  // });
+
+  // function postData(form) {
+  //   form.addEventListener('submit', (e) => {
+  //     e.preventDefault();
+
+  //     const statusMessage = document.createElement('div');
+  //     statusMessage.classList.add('status');
+  //     statusMessage.textContent = message.loading;
+  //     form.append(statusMessage);
+
+  //     const request = new XMLHttpRequest();
+  //     request.open('POST', 'server.php');
+
+  //     // request.setRequestHeader('Content-type', 'multipart/form-data')
+  //     const formData = new FormData(form);
+
+  //     request.send(formData);
+
+  //     request.addEventListener('load', () => {
+  //       if (request.status === 200) {
+  //         console.log(request.response);
+  //         statusMessage.textContent = message.success;
+  //         form.reset()
+  //         setTimeout(() => {
+  //           statusMessage.remove();
+  //         }, 2000)
+  //       } else {
+  //         statusMessage.textContent = message.failure;
+  //       }
+  //     });
+
+  //   });
+
+  // }
+
   // forms json
   const forms = document.querySelectorAll('form');
 
@@ -243,9 +291,9 @@ document.addEventListener('DOMContentLoaded', () => {
         display: block;
         margin: 0 auto;
       `;
-     
-      form.insertAdjacentElement('afterend', statusMessage);
-
+      
+       // form.append(statusMessage);
+       form.insertAdjacentElement('afterend', statusMessage);
 
       const request = new XMLHttpRequest();
       request.open('POST', 'server.php');
@@ -261,6 +309,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const json = JSON.stringify(object);
 
       request.send(json);
+
+      // request.addEventListener('load', () => {
+      //   if (request.status === 200) {
+      //     console.log(request.response);
+      //     statusMessage.textContent = message.success;
+      //     form.reset();
+      //     setTimeout(() => {
+      //       statusMessage.remove();
+      //     }, 2000)
+      //   } else {
+      //     statusMessage.textContent = message.failure;
+      //   }
+      // });
 
       request.addEventListener('load', () => {
         if (request.status === 200) {
