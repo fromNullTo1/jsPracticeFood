@@ -99,14 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalTrigger = document.querySelectorAll('[data-modal]');
   // const modalCloseBtn = document.querySelector('[data-close]');
   const modal = document.querySelector('.modal');
-
+  
   function closeModal() {
-    modal.classList.toggle('show');
+    modal.classList.add('hide');
+    modal.classList.remove('show');
     document.body.style.overflow = '';
   }
 
   function openModal() {
-    modal.classList.toggle('show');
+    modal.classList.add('show');
+    modal.classList.remove('hide');
     document.body.style.overflow = 'hidden';
     clearInterval(modalTimerId);
   }
@@ -304,16 +306,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
       request.send(json);
 
+      // request.addEventListener('load', () => {
+      //   if (request.status === 200) {
+      //     console.log(request.response);
+      //     statusMessage.textContent = message.success;
+      //     form.reset();
+      //     setTimeout(() => {
+      //       statusMessage.remove();
+      //     }, 2000)
+      //   } else {
+      //     statusMessage.textContent = message.failure;
+      //   }
+      // });
+
       request.addEventListener('load', () => {
         if (request.status === 200) {
           console.log(request.response);
-          statusMessage.textContent = message.success;
-          form.reset()
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 2000)
+          showThanksModal(message.success);
+          form.reset();
+          statusMessage.remove();
         } else {
-          statusMessage.textContent = message.failure;
+          showThanksModal(message.failure);
         }
       });
 
@@ -323,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // add style
 
-function showThanksModal() {
+function showThanksModal(message) {
   const prevModalDialog = document.querySelector('.modal__dialog');
 
   prevModalDialog.classList.add('hide');
@@ -334,11 +347,17 @@ function showThanksModal() {
   thanksModal.innerHTML = `
     <div class="modal__content">
       <div class="modal__close" data-close>&times;</div>
-      <div class="modal__title"></div>
-
+      <div class="modal__title">${message}</div>
     </div>
   `;
 
+  document.querySelector('.modal').append(thanksModal);
+  setTimeout(() => {
+    thanksModal.remove();
+    prevModalDialog.classList.add('show');
+    prevModalDialog.classList.remove('hide');
+    closeModal();
+  }, 4000);
 }
 
 });
