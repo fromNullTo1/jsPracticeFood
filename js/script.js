@@ -189,24 +189,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const getResource = async (url) => {
-    const result = await fetch(url);
+  // const getResource = async (url) => {
+  //   const result = await fetch(url);
 
-    if (!result.ok) {
-      throw new Error(`couldnt fetch ${url}, stats: ${result.status}`);
-    }
+  //   if (!result.ok) {
+  //     throw new Error(`couldnt fetch ${url}, stats: ${result.status}`);
+  //   }
 
-    return await result.json();
-  };
+  //   return await result.json();
+  // };
 
-  getResource('http://localhost:3000/menu')
+  // getResource('http://localhost:3000/menu')
+  //   .then(data => {
+  //     data.forEach(({img, altimg, title, descr, price}) => {
+  //       new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+  //     });
+  //   });
+
+  axios.get('http://localhost:3000/menu')
     .then(data => {
-      data.forEach(({img, altimg, title, descr, price}) => {
+      data.data.forEach(({
+        img,
+        altimg,
+        title,
+        descr,
+        price
+      }) => {
         new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
       });
     });
-
-
 
   // forms json
   const forms = document.querySelectorAll('form');
@@ -223,11 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const postData = async (url, data) => {
     const result = await fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: data
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: data
     });
 
     return await result.json();
@@ -251,17 +262,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
       postData('http://localhost:3000/requests', json)
-      .then(data => {
-        console.log(data);
-        showThanksModal(message.success);
-        statusMessage.remove();
-      })
-      .catch(() => {
-        showThanksModal(message.failure);
-      })
-      .finally(() => {
-        form.reset();
-      })
+        .then(data => {
+          console.log(data);
+          showThanksModal(message.success);
+          statusMessage.remove();
+        })
+        .catch(() => {
+          showThanksModal(message.failure);
+        })
+        .finally(() => {
+          form.reset();
+        })
 
     });
 
