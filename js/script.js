@@ -37,6 +37,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   hide();
   show();
+  // const hide = function () {
+  //   tabsContent.forEach(tab => {
+  //     tab.classList.add('hide');
+  //     tab.classList.remove('show', 'fade');
+  //   });
+  //   tabHeaders.forEach(tab => {
+  //     tab.classList.remove('tabheader__item_active');
+  //   })
+  // }
+
+  // const show = function (i = 0) {
+  //   tabsContent[i].classList.add('show', 'fade');
+  //   tabHeaders[i].classList.add('tabheader__item_active');
+  // }
+
+  // tabHeadersBox.addEventListener('click', e => {
+  //   if (e.target && e.target.matches('.tabheader__item')) {
+  //     tabHeaders.forEach((el, i) => {
+  //       if (e.target == el) {
+  //         hide();
+  //         show(i);
+  //       }
+  //     })
+  //   }
+  // })
+
+
+  // hide();
+  // show();
 
   // timer
 
@@ -305,8 +334,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
-  // fetch('http://localhost:3000/menu')
-  //   .then(data => data.json())
-  //   .then(data => console.log(data));
+// slider
+  const slider = document.querySelector('.offer__slider');
+  const sliderItems = slider.querySelectorAll('.offer__slide');
+  const leftArrow = slider.querySelector('.offer__slider-prev');
+  const rightArrow = slider.querySelector('.offer__slider-next');
+  const currentItem = slider.querySelector('#current');
+  const totalItems = slider.querySelector('#total');
 
+  console.log(currentItem.textContent -1 )
+  function hideS() {
+    sliderItems.forEach((item) => {
+      item.classList.add('hide');
+      item.classList.remove('show');
+    });    
+  }
+
+  function showS() {
+    let num = currentItem.textContent - 1;  
+    sliderItems[num].classList.add('show');
+    sliderItems[num].classList.remove('hide');
+  }
+
+  hideS();
+  showS();
+
+  leftArrow.addEventListener('click', (e) => {
+
+    // currentItem.textContent -= 1;
+    if (currentItem.textContent == 1) {
+      currentItem.textContent = totalItems.textContent;
+    } else if (currentItem.textContent < 10) {
+      currentItem.textContent -= 1;
+      currentItem.textContent = '0' + currentItem.textContent;
+    } else {
+      currentItem.textContent -= 1;
+    }
+    hideS();
+    showS();
+  });
+  // leftArrow.addEventListener('click', (e) => {
+  //   let num = currentItem.textContent;
+  //   num = '0' + (num - 1);
+  //   currentItem.textContent = num;
+  //   hideS();
+  //   showS();
+  // });
+
+  rightArrow.addEventListener('click', (e) => {
+    let num = currentItem.textContent;
+    
+    if (num == totalItems.textContent) {
+      num = '01';
+    } else if (num < 9) {
+      num = '0' + (+num + 1);
+    } else {
+      num = +num + 1
+    }
+    currentItem.textContent = num;
+    hideS();
+    showS();
+  });
+  // rightArrow.addEventListener('click', (e) => {
+  //   let num = currentItem.textContent;
+  //   if (currentItem.textContent == totalItems.total) {
+  //     currentItem.textContent = 1;
+  //   }
+  //   let num = currentItem.textContent;
+  //   num = '0' + (+num + 1);
+  //   currentItem.textContent = num;
+  //   hideS();
+  //   showS();
+  // });
+ 
+
+  
 });
