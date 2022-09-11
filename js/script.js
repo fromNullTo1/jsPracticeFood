@@ -487,8 +487,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+// calc 
+  const resultCalc = document.querySelector('.calculating__result span');
 
+  let gender, height, weight, age, ratio;
+
+  function getTotal() {
+    if (!height || !weight || !age) {
+      resultCalc.textContent = '____';
+      return;
+    }
+
+    if (gender === 'female') {
+      resultCalc.textContent = (447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio;
+    } else {
+      result.textContent = (88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio;
+    }
+
+
+  }
   
+  getTotal();
+
+  function getStaticInformation(parentSelector, activeClass) {
+    const elements = document.querySelectorAll(`${parentSelector} div`);
+
+    document.querySelector(parentSelector).addEventListener('click', e => {
+      if (e.target.getAttribute('data-ratio')) {
+        ratio = +e.target.getAttribute('data-ratio');
+      } else {
+        gender = e.target.getAttribute('id');
+        
+      }
+    })
+  }
   
 
 
