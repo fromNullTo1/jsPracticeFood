@@ -1,3 +1,5 @@
+import {closeModal, openModal} from './modal';
+
 function forms() {
 
     // forms json
@@ -88,4 +90,4 @@ function forms() {
 
 }
 
-module.exports = forms;
+export default  forms;

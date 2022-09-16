@@ -114,4 +114,4 @@ getTotal();
 
 }
 
-module.exports = calc;
+export default calc;
