@@ -90,4 +90,4 @@ function forms(modalTimerId) {
 
 }
 
-export default  forms;
+export default forms;
