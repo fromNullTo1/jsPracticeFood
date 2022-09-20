@@ -1,4 +1,5 @@
 import {closeModal, openModal} from './modal';
+import {postData} from '../services/services';
 
 function forms(modalTimerId) {
 
@@ -14,18 +15,6 @@ function forms(modalTimerId) {
     forms.forEach(form => {
         bindPostData(form);
     });
-
-    const postData = async (url, data) => {
-        const result = await fetch(url, {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: data
-        });
-
-        return await result.json();
-    };
 
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {

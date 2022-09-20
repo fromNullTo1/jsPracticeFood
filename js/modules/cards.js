@@ -1,3 +1,5 @@
+import {getResource} from '../services/services'
+
 function cards() {
     // classes
 
@@ -41,17 +43,7 @@ function cards() {
     `;
             this.parent.append(div);
         }
-    }
-
-    const getResource = async (url) => {
-        const result = await fetch(url);
-
-        if (!result.ok) {
-            throw new Error(`couldnt fetch ${url}, stats: ${result.status}`);
-        }
-
-        return await result.json();
-    };
+    }    
 
     getResource('http://localhost:3000/menu')
         .then(data => {
@@ -66,18 +58,7 @@ function cards() {
             });
         });
 
-    // axios.get('http://localhost:3000/menu')
-    //     .then(data => {
-    //         data.data.forEach(({
-    //             img,
-    //             altimg,
-    //             title,
-    //             descr,
-    //             price
-    //         }) => {
-    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
-    //         });
-    //     });
+  
 }
 
 export default cards;

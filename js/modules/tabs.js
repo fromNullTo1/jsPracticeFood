@@ -1,11 +1,11 @@
-function tabs() {
-
+function tabs(tabContainerSelector, tabsContentSelector, tabHeaderBoxSelector, tabsSelector, activeClass) {
+    
     //tabs
 
-    const tabContainer = document.querySelector('.tabcontainer');
-    const tabsContent = tabContainer.querySelectorAll('.tabcontent');
-    const tabHeadersBox = tabContainer.querySelector('.tabheader');
-    const tabHeaders = tabContainer.querySelectorAll('.tabheader__item');
+    const tabContainer = document.querySelector(tabContainerSelector);
+    const tabsContent = tabContainer.querySelectorAll(tabsContentSelector);
+    const tabHeadersBox = tabContainer.querySelector(tabHeaderBoxSelector);
+    const tabHeaders = tabContainer.querySelectorAll(tabsSelector);
 
     const hide = function () {
         tabsContent.forEach(tab => {
@@ -13,17 +13,17 @@ function tabs() {
             tab.classList.remove('show', 'fade');
         });
         tabHeaders.forEach(tab => {
-            tab.classList.remove('tabheader__item_active');
+            tab.classList.remove(activeClass);
         })
     }
 
     const show = function (i = 0) {
         tabsContent[i].classList.add('show', 'fade');
-        tabHeaders[i].classList.add('tabheader__item_active');
+        tabHeaders[i].classList.add(activeClass);
     }
 
     tabHeadersBox.addEventListener('click', e => {
-        if (e.target && e.target.matches('.tabheader__item')) {
+        if (e.target && e.target.matches(tabsSelector)) {
             tabHeaders.forEach((el, i) => {
                 if (e.target == el) {
                     hide();
